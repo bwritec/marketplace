@@ -251,8 +251,117 @@
                         </div>
 
                         <div class="tab-pane fade" id="email" role="tabpanel">
-                            <h5>Conteúdo email</h5>
-                            <p>Texto da aba email.</p>
+                            <div class="mb-3">
+                                <label for="email_from_email" class="form-label">
+                                    Do Email
+                                </label>
+
+                                <input type="text" name="email_from_email" id="email_from_email" class="form-control" placeholder="nao-responder@kwrite.com.br">
+
+                                <?php if (isset($errors['email_from_email'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['email_from_email']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email_from_name" class="form-label">
+                                    Do Nome
+                                </label>
+
+                                <input type="text" name="email_from_name" id="email_from_name" class="form-control" placeholder="Kwrite">
+
+                                <?php if (isset($errors['email_from_name'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['email_from_name']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email_protocol" class="form-label">
+                                    Protocolo
+                                </label>
+
+                                <input type="text" name="email_protocol" id="email_protocol" class="form-control" value="smtp" disabled>
+
+                                <?php if (isset($errors['email_protocol'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['email_protocol']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email_host" class="form-label">
+                                    Host
+                                </label>
+
+                                <input type="text" name="email_host" id="email_host" class="form-control">
+
+                                <?php if (isset($errors['email_host'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['email_host']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email_user" class="form-label">
+                                    Usuário
+                                </label>
+
+                                <input type="text" name="email_user" id="email_user" class="form-control">
+
+                                <?php if (isset($errors['email_user'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['email_user']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email_password" class="form-label">
+                                    Senha
+                                </label>
+
+                                <input type="text" name="email_password" id="email_password" class="form-control">
+
+                                <?php if (isset($errors['email_password'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['email_password']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email_port" class="form-label">
+                                    Porta
+                                </label>
+
+                                <input type="text" name="email_port" id="email_port" class="form-control">
+
+                                <?php if (isset($errors['email_port'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['email_port']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email_crypto" class="form-label">
+                                    Criptografia
+                                </label>
+
+                                <input type="text" name="email_crypto" id="email_crypto" class="form-control" value="tls">
+
+                                <?php if (isset($errors['email_crypto'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['email_crypto']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="token" role="tabpanel">
