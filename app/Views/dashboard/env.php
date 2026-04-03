@@ -125,6 +125,12 @@
                                 Token
                             </button>
                         </li>
+
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="others-tab" data-bs-toggle="tab" data-bs-target="#others" type="button" role="tab">
+                                Outros
+                            </button>
+                        </li>
                     </ul>
 
                     <div class="tab-content mt-3" id="myTabContent">
@@ -367,6 +373,11 @@
                         <div class="tab-pane fade" id="token" role="tabpanel">
                             <h5>Conteúdo token's</h5>
                             <p>Texto da aba token.</p>
+                        </div>
+
+                        <div class="tab-pane fade" id="others" role="tabpanel">
+                            <h5>Conteúdo outros</h5>
+                            <p>Texto da aba outros.</p>
                         </div>
                     </div>
 
