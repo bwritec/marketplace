@@ -371,13 +371,49 @@
                         </div>
 
                         <div class="tab-pane fade" id="token" role="tabpanel">
-                            <h5>Conteúdo token's</h5>
-                            <p>Texto da aba token.</p>
+                            <div class="mb-3">
+                                <label for="token_melhorenvio" class="form-label">
+                                    Melhor Envio
+                                </label>
+
+                                <textarea name="token_melhorenvio" id="token_melhorenvio" class="form-control"></textarea>
+
+                                <?php if (isset($errors['token_melhorenvio'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['token_melhorenvio']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="others" role="tabpanel">
-                            <h5>Conteúdo outros</h5>
-                            <p>Texto da aba outros.</p>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Ambiente
+                                </label>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="environment" id="production" value="production" checked>
+
+                                    <label class="form-check-label" for="production">
+                                        Produção
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="environment" id="development" value="development">
+
+                                    <label class="form-check-label" for="development">
+                                        Desenvolvimento
+                                    </label>
+                                </div>
+
+                                <?php if (isset($errors['environment'])): ?>
+                                    <div class="invalid-feedback">
+                                        <?= esc($errors['environment']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
 
