@@ -393,7 +393,7 @@
                                 </label>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="environment" id="production" value="production" checked>
+                                    <input class="form-check-input" type="radio" name="environment" id="production" value="production" <?= env("CI_ENVIRONMENT") == "production" ? "checked" : ""; ?>>
 
                                     <label class="form-check-label" for="production">
                                         Produção
@@ -401,7 +401,7 @@
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="environment" id="development" value="development">
+                                    <input class="form-check-input" type="radio" name="environment" id="development" value="development" <?= env("CI_ENVIRONMENT") == "development" ? "checked" : ""; ?>>
 
                                     <label class="form-check-label" for="development">
                                         Desenvolvimento
