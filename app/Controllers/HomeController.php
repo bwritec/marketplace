@@ -30,7 +30,9 @@ class HomeController extends BaseController
             'last_products' => $last_products,
         ];
 
-        return view("index", $data);
+        
+
+        return view("themes/". env('app.theme') ."/index", $data);
     }
 
     /**
@@ -42,6 +44,6 @@ class HomeController extends BaseController
             'title' => 'Branco',
         ];
 
-        return view("blank", $data);
+        return view("themes/". env('app.theme') ."/blank", $data);
     }
 }

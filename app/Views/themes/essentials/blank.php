@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/default') ?>
+<?= $this->extend('themes/essentials/layouts/default') ?>
 
 <?= $this->section('content') ?>
     <div class="content">

@@ -9,7 +9,7 @@ class RegisterController extends BaseController
 {
     public function index()
     {
-        return view('register', ['title' => 'Cadastro de Usuário']);
+        return view('system/register', ['title' => 'Cadastro de Usuário']);
     }
 
     public function store()
