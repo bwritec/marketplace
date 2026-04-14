@@ -41,7 +41,7 @@
                 <?= csrf_field() ?>
 
                 <div class="mb-3">
-                    <label class="form-label">
+                    <label class="form-label mb-0">
                         CPF
                     </label>
 
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">
+                    <label class="form-label mb-0">
                         Senha
                     </label>
 
@@ -117,4 +117,24 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    /**
+     * máscara de CPF
+     */
+    document.getElementById('cpf').addEventListener('input', function (e)
+    {
+        let value = e.target.value.replace(/\D/g, '');
+
+        if (value.length > 11)
+        {
+            value = value.slice(0, 11);
+        }
+
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        e.target.value = value;
+    });
+</script>
 <?= $this->endSection() ?>
