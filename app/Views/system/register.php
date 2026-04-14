@@ -7,16 +7,20 @@
             <?php
 
                 $title = env('app.name');
-                $title_list = explode(" ", $title);
+                $title = str_replace(" ", "", $title);
+
                 $title_with_subtitle = false;
                 $title_first = "";
                 $title_last = "";
 
-                if (count($title_list) > 1)
+                if (preg_match('/(?<!^)([A-Z])/', $title, $matches, PREG_OFFSET_CAPTURE))
                 {
+                    $pos = $matches[0][1];
+
+                    $title_first = substr($title, 0, $pos);
+                    $title_last = substr($title, $pos);
+
                     $title_with_subtitle = true;
-                    $title_first = $title_list[0];
-                    $title_last = $title_list[1];
                 } else
                 {
                     $title_first = $title;

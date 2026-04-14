@@ -20,7 +20,7 @@ class LoginController extends BaseController
             return redirect()->to('/dashboard');
         }
 
-        return view('login', ['title' => 'Login']);
+        return view('system/login', ['title' => 'Login']);
     }
 
     /**
@@ -48,7 +48,7 @@ class LoginController extends BaseController
 
         if (!$validation->withRequest($this->request)->run())
         {
-            return view('login', [
+            return view('system/login', [
                 'title'  => 'Login',
                 'errors' => $validation->getErrors()
             ]);
@@ -61,7 +61,7 @@ class LoginController extends BaseController
 
         if (!$user || !password_verify($pass, $user['password']))
         {
-            return view('login', [
+            return view('system/login', [
                 'title'  => 'Login',
                 'errors' => [
                     'login' => 'CPF ou senha inválidos.'
