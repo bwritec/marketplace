@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>system/dist/css/adminlte.css">
 
 </head>
-<body class="hold-transition register-page">
+<body class="hold-transition login-page">
 
     <?= $this->renderSection('content') ?>
 

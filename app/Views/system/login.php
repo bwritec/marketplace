@@ -37,24 +37,50 @@
                 Faça login para iniciar sua sessão.
             </p>
 
-            <form action="../../index3.html" method="post">
-                <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email">
+            <form action="<?= site_url('login') ?>" method="post">
+                <?= csrf_field() ?>
 
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                <div class="mb-3">
+                    <label class="form-label">
+                        CPF
+                    </label>
+
+                    <div class="input-group">
+                        <input type="text" name="cpf" id="cpf" maxlength="14" class="form-control <?= isset($errors['cpf']) ? 'is-invalid' : '' ?>" value="<?= old('cpf') ?>">
+
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <i class="fas fa-passport"></i>
+                            </div>
                         </div>
+
+                        <?php if (isset($errors['cpf'])): ?>
+                            <div class="invalid-feedback">
+                                <?= esc($errors['cpf']) ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password">
+                <div class="mb-3">
+                    <label class="form-label">
+                        Senha
+                    </label>
 
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                    <div class="input-group">
+                        <input type="password" name="password" class="form-control <?= isset($errors['password']) ? 'is-invalid' : '' ?>">
+
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
                         </div>
+
+                        <?php if (isset($errors['password'])): ?>
+                            <div class="invalid-feedback">
+                                <?= esc($errors['password']) ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -78,7 +104,7 @@
             </form>
 
             <p class="mb-1">
-                <a href="forgot-password.html">
+                <a href="<?= site_url('forgot') ?>">
                     Esqueci minha senha
                 </a>
             </p>
