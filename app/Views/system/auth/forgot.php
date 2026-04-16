@@ -58,13 +58,19 @@
                     </label>
 
                     <div class="input-group">
-                        <input type="email" name="email" id="email" class="form-control" required>
+                        <input type="email" name="email" id="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>" value="<?= old('email') ?>">
 
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+
+                        <?php if (isset($errors['email'])): ?>
+                            <div class="invalid-feedback">
+                                <?= esc($errors['email']) ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 

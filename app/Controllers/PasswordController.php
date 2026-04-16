@@ -18,6 +18,18 @@ class PasswordController extends BaseController
         helper(['form']);
         $email = $this->request->getPost('email');
 
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'email' => 'required|valid_email',
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return view('system/auth/forgot', [
+                'title' => 'Recuperar senha',
+                'errors' => $validation->getErrors(),
+            ]);
+        }
+
         $userModel = new UserModel();
         $resetModel = new PasswordResetModel();
 
