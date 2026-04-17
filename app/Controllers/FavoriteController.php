@@ -156,6 +156,7 @@
             return view('system/dashboard/favorites', [
                 'title' => 'Favoritos',
                 'page' => 'dashboard.favorites',
+                'user' => $user,
                 'favorites' => $products
             ]);
         }
