@@ -7,14 +7,13 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>
-                        Blank Page
+                        Dashboard
                     </h1>
                 </div>
 
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
+                        <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </div>
             </div>
@@ -25,16 +24,18 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                    Title
+                    Informações
                 </h3>
             </div>
 
             <div class="card-body">
-                Start creating your amazing application!
-            </div>
+                <h2>Bem-vindo, <?= esc($user['name']) ?>!</h2>
+                <p>Seu CPF: <?= esc($user['cpf']) ?></p>
+                <p>Email: <?= esc($user['email']) ?></p>
 
-            <div class="card-footer">
-                Footer
+                <a href="<?= site_url('logout') ?>" class="btn btn-danger mt-3">
+                    Sair
+                </a>
             </div>
         </div>
     </section>

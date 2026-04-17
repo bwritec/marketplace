@@ -124,15 +124,27 @@
 
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <?php if ($page == "dashboard.index"): ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url() ?>index.php/dashboard" class="nav-link active">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
 
-                                <p>
-                                    Dashboard
-                                </p>
-                            </a>
-                        </li>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url() ?>index.php/dashboard" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
 
                         <li class="nav-header">
                             ADMIN

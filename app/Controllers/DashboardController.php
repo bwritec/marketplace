@@ -17,6 +17,7 @@ class DashboardController extends BaseController
 
         return view('system/dashboard/index', [
             'title' => 'Dashboard',
+            'page' => 'dashboard.index',
             'user'  => $user
         ]);
     }
