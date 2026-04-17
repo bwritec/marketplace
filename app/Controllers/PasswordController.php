@@ -93,6 +93,19 @@ class PasswordController extends BaseController
 
         $reset = $resetModel->getByToken($token);
 
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'password' => 'required|min_length[6]',
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return view('system/auth/reset', [
+                'title' => 'Redefinir senha',
+                'token' => $token,
+                'errors' => $validation->getErrors(),
+            ]);
+        }
+
         if (!$reset)
         {
             return redirect()->to('/forgot')->with('error', 'Token inválido.');
