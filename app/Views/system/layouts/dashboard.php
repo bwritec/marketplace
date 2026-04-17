@@ -146,6 +146,28 @@
                             </li>
                         <?php endif; ?>
 
+                        <?php if ($page == "dashboard.favorites"): ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url() ?>index.php/dashboard/favorites" class="nav-link active">
+                                    <i class="nav-icon fas fa-star"></i>
+
+                                    <p>
+                                        Favoritos
+                                    </p>
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url() ?>index.php/dashboard/favorites" class="nav-link">
+                                    <i class="nav-icon fas fa-star"></i>
+
+                                    <p>
+                                        Favoritos
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
                         <li class="nav-header">
                             ADMIN
                         </li>
