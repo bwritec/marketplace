@@ -30,8 +30,6 @@ class HomeController extends BaseController
             'last_products' => $last_products,
         ];
 
-        
-
         return view("themes/". env('app.theme') ."/index", $data);
     }
 
