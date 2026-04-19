@@ -18,9 +18,10 @@ class PhoneController extends BaseController
         $phoneModel = new PhoneModel();
         $phone = $phoneModel->getByUserId($user['id']);
 
-        return view('dashboard/contact', [
+        return view('system/dashboard/contact', [
             'title' => 'Atualizar Telefone',
             'user'  => $user,
+            'page' => 'dashboard.contact',
             'phone' => $phone ? $phone['phone'] : ''
         ]);
     }
@@ -63,9 +64,10 @@ class PhoneController extends BaseController
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
-            return view('dashboard/contact', [
+            return view('system/dashboard/contact', [
                 'title' => 'Atualizar Telefone',
                 'user'  => $user,
+                'page' => 'dashboard.contact',
                 'errors' => $validation->getErrors(),
                 'phone'  => $this->request->getPost('phone')
             ]);

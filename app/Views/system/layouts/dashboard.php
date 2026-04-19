@@ -244,6 +244,28 @@
                             </li>
                         <?php endif; ?>
 
+                        <?php if ($page == "dashboard.contact"): ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url() ?>index.php/dashboard/contact" class="nav-link active">
+                                    <i class="nav-icon fas fa-phone-alt"></i>
+
+                                    <p>
+                                        Contato
+                                    </p>
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url() ?>index.php/dashboard/contact" class="nav-link">
+                                    <i class="nav-icon fas fa-phone-alt"></i>
+
+                                    <p>
+                                        Contato
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
                         <li class="nav-header">
                             ADMIN
                         </li>
