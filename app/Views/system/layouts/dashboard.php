@@ -32,6 +32,16 @@
      -->
     <link rel="stylesheet" href="<?= base_url() ?>system/dist/css/adminlte.css">
 
+    <!--
+      - jQuery
+     -->
+    <script type="text/javascript" src="<?= base_url() ?>system/plugins/jquery/jquery.js"></script>
+
+    <!--
+      - Bootstrap 4
+     -->
+    <script type="text/javascript" src="<?= base_url() ?>system/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -268,16 +278,6 @@
 
         <aside class="control-sidebar control-sidebar-dark"></aside>
     </div>
-
-    <!--
-      - jQuery
-     -->
-    <script type="text/javascript" src="<?= base_url() ?>system/plugins/jquery/jquery.js"></script>
-
-    <!--
-      - Bootstrap 4
-     -->
-    <script type="text/javascript" src="<?= base_url() ?>system/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 
     <!--
       - AdminLTE App

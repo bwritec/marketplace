@@ -37,7 +37,7 @@
                     </div>
                 <?php endif; ?>
 
-                <form action="<?= site_url('dashboard/address') ?>" method="post">
+                <form id="form-address" action="<?= site_url('dashboard/address') ?>" method="post">
                     <?= csrf_field() ?>
 
                     <div class="mb-3">
@@ -102,7 +102,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-dark">
+                    <button type="submit" id="submit-form" class="btn btn-dark">
                         Salvar
                     </button>
                 </form>
@@ -130,6 +130,20 @@
         }
 
         $(this).val(v);
+    });
+
+    /**
+     * Remove a mascara de cep quando o usuario clica
+     * no submit.
+     */
+    $('form').on('submit', function()
+    {
+        var cep = $('#cep').val();
+
+        // Remove tudo que não for número
+        cep = cep.replace(/\D/g, '');
+
+        $('#cep').val(cep);
     });
 </script>
 <?= $this->endSection() ?>
