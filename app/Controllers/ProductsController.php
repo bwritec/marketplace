@@ -37,9 +37,11 @@ class ProductsController extends BaseController
             $product['thumbnail'] = $thumb ? base_url($thumb['name']) : base_url('dist/photos/no-image.png');
         }
 
-        return view('dashboard/products', [
+        return view('system/dashboard/products', [
             'title' => 'Meus Produtos',
             'products' => $products,
+            'user' => $user,
+            'page' => 'dashboard.products',
             'success' => session()->getFlashdata('success'),
             'error' => session()->getFlashdata('error')
         ]);

@@ -266,6 +266,28 @@
                             </li>
                         <?php endif; ?>
 
+                        <?php if ($page == "dashboard.products"): ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url() ?>index.php/dashboard/products" class="nav-link active">
+                                    <i class="nav-icon fas fa-fire"></i>
+
+                                    <p>
+                                        Anúncios
+                                    </p>
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url() ?>index.php/dashboard/products" class="nav-link">
+                                    <i class="nav-icon fas fa-fire"></i>
+
+                                    <p>
+                                        Anúncios
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
                         <li class="nav-header">
                             ADMIN
                         </li>
