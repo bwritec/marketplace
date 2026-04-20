@@ -58,12 +58,14 @@
             $pager = $categoryModel->pager;
 
             $data = [
-                'title'      => 'Categorias',
+                'title' => 'Categorias',
                 'categories' => $categories,
-                'pager'      => $pager,
+                'pager' => $pager,
+                'user' => $user,
+                'page' => 'dashboard.categories'
             ];
 
-            return view('dashboard/categories/index', $data);
+            return view('system/dashboard/categories/index', $data);
         }
 
         /**
@@ -93,9 +95,11 @@
             $data = [
                 'title' => 'Nova Categoria',
                 'parents' => $parents,
+                'user' => $user,
+                'page' => 'dashboard.categories'
             ];
 
-            return view('dashboard/categories/create', $data);
+            return view('system/dashboard/categories/create', $data);
         }
 
         /**
@@ -171,10 +175,12 @@
             $data = [
                 'title' => 'Editar Categoria',
                 'category' => $category,
-                'parents' => $parents
+                'parents' => $parents,
+                'user' => $user,
+                'page' => 'dashboard.categories'
             ];
 
-            return view('dashboard/categories/edit', $data);
+            return view('system/dashboard/categories/edit', $data);
         }
 
         /**

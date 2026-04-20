@@ -310,19 +310,33 @@
                             </li>
                         <?php endif; ?>
 
-                        <li class="nav-header">
-                            ADMIN
-                        </li>
+                        <?php if (session()->has('user') && session('user.admin') === '1'): ?>
+                            <li class="nav-header">
+                                ADMIN
+                            </li>
 
-                        <li class="nav-item">
-                            <a href="../calendar.html" class="nav-link">
-                                <i class="nav-icon far fa-calendar-alt"></i>
+                            <?php if ($page == "dashboard.categories"): ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() ?>index.php/dashboard/categories" class="nav-link active">
+                                        <i class="nav-icon fas fa-list"></i>
 
-                                <p>
-                                    Calendar
-                                </p>
-                            </a>
-                        </li>
+                                        <p>
+                                            Categorias
+                                        </p>
+                                    </a>
+                                </li>
+                            <?php else: ?>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() ?>index.php/dashboard/categories" class="nav-link">
+                                        <i class="nav-icon fas fa-list"></i>
+
+                                        <p>
+                                            Categorias
+                                        </p>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>
