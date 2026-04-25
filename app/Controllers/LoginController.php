@@ -20,7 +20,11 @@ class LoginController extends BaseController
             return redirect()->to('/dashboard');
         }
 
-        return view('system/login', ['title' => 'Login']);
+        $admin_theme = env('app.theme.system');
+
+        return view('system/'. $admin_theme .'/login', [
+            'title' => 'Login'
+        ]);
     }
 
     /**
@@ -48,7 +52,9 @@ class LoginController extends BaseController
 
         if (!$validation->withRequest($this->request)->run())
         {
-            return view('system/login', [
+            $admin_theme = env('app.theme.system');
+
+            return view('system/'. $admin_theme .'/login', [
                 'title'  => 'Login',
                 'errors' => $validation->getErrors()
             ]);
@@ -60,7 +66,9 @@ class LoginController extends BaseController
 
         if (!$user || !password_verify($pass, $user['password']))
         {
-            return view('system/login', [
+            $admin_theme = env('app.theme.system');
+
+            return view('system/'. $admin_theme .'/login', [
                 'title'  => 'Login',
                 'errors' => [
                     'cpf' => 'CPF ou senha inválidos.'
