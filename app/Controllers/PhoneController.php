@@ -11,14 +11,17 @@ class PhoneController extends BaseController
     {
         $user = session()->get('user');
 
-        if (!$user) {
+        if (!$user)
+        {
             return redirect()->to('/login');
         }
 
         $phoneModel = new PhoneModel();
         $phone = $phoneModel->getByUserId($user['id']);
 
-        return view('system/dashboard/contact', [
+        $admin_theme = env('app.theme.system');
+
+        return view('system/'. $admin_theme .'/dashboard/contact', [
             'title' => 'Atualizar Telefone',
             'user'  => $user,
             'page' => 'dashboard.contact',
@@ -31,7 +34,8 @@ class PhoneController extends BaseController
         helper(['form']);
         $user = session()->get('user');
 
-        if (!$user) {
+        if (!$user)
+        {
             return redirect()->to('/login');
         }
 
@@ -63,8 +67,11 @@ class PhoneController extends BaseController
             ]
         ]);
 
-        if (!$validation->withRequest($this->request)->run()) {
-            return view('system/dashboard/contact', [
+        if (!$validation->withRequest($this->request)->run())
+        {
+            $admin_theme = env('app.theme.system');
+
+            return view('system/'. $admin_theme .'/dashboard/contact', [
                 'title' => 'Atualizar Telefone',
                 'user'  => $user,
                 'page' => 'dashboard.contact',
@@ -78,6 +85,8 @@ class PhoneController extends BaseController
 
         $phoneModel->saveOrUpdate($user['id'], $phone);
 
-        return redirect()->to('/dashboard/contact')->with('success', 'Telefone atualizado com sucesso!');
+        return redirect()
+            ->to('/dashboard/contact')
+            ->with('success', 'Telefone atualizado com sucesso!');
     }
 }
