@@ -10,7 +10,11 @@ class PasswordController extends BaseController
 {
     public function forgot()
     {
-        return view('system/auth/forgot', ['title' => 'Recuperar senha']);
+        $admin_theme = env('app.theme.system');
+
+        return view('system/'. $admin_theme .'/auth/forgot', [
+            'title' => 'Recuperar senha'
+        ]);
     }
 
     public function sendResetLink()
@@ -23,8 +27,11 @@ class PasswordController extends BaseController
             'email' => 'required|valid_email',
         ]);
 
-        if (!$validation->withRequest($this->request)->run()) {
-            return view('system/auth/forgot', [
+        if (!$validation->withRequest($this->request)->run())
+        {
+            $admin_theme = env('app.theme.system');
+
+            return view('system/'. $admin_theme .'/auth/forgot', [
                 'title' => 'Recuperar senha',
                 'errors' => $validation->getErrors(),
             ]);
@@ -37,7 +44,9 @@ class PasswordController extends BaseController
 
         if (!$user)
         {
-            return view('system/auth/forgot', [
+            $admin_theme = env('app.theme.system');
+
+            return view('system/'. $admin_theme .'/auth/forgot', [
                 'title' => 'Recuperar senha',
                 'error' => 'E-mail não encontrado.'
             ]);
@@ -61,7 +70,9 @@ class PasswordController extends BaseController
         ");
         $emailService->send();
 
-        return view('system/auth/forgot', [
+        $admin_theme = env('app.theme.system');
+
+        return view('system/'. $admin_theme .'/auth/forgot', [
             'title' => 'Recuperar senha',
             'success' => 'Enviamos um link para seu e-mail.'
         ]);
@@ -77,7 +88,9 @@ class PasswordController extends BaseController
             return redirect()->to('/forgot')->with('error', 'Token inválido ou expirado.');
         }
 
-        return view('system/auth/reset', [
+        $admin_theme = env('app.theme.system');
+
+        return view('system/'. $admin_theme .'/auth/reset', [
             'title' => 'Redefinir senha',
             'token' => $token
         ]);
@@ -99,8 +112,11 @@ class PasswordController extends BaseController
             'password' => 'required|min_length[6]',
         ]);
 
-        if (!$validation->withRequest($this->request)->run()) {
-            return view('system/auth/reset', [
+        if (!$validation->withRequest($this->request)->run())
+        {
+            $admin_theme = env('app.theme.system');
+
+            return view('system/'. $admin_theme .'/auth/reset', [
                 'title' => 'Redefinir senha',
                 'token' => $token,
                 'errors' => $validation->getErrors(),
@@ -114,7 +130,9 @@ class PasswordController extends BaseController
 
         if (strlen($password) < 6)
         {
-            return view('system/auth/reset', [
+            $admin_theme = env('app.theme.system');
+
+            return view('system/'. $admin_theme .'/auth/reset', [
                 'title' => 'Redefinir senha',
                 'token' => $token,
                 'error' => 'A senha deve ter pelo menos 6 caracteres.'
@@ -127,6 +145,8 @@ class PasswordController extends BaseController
 
         $resetModel->deleteToken($token);
 
-        return redirect()->to('/login')->with('success', 'Senha alterada com sucesso!');
+        return redirect()
+            ->to('/login')
+            ->with('success', 'Senha alterada com sucesso!');
     }
 }
