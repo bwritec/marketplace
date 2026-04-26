@@ -57,6 +57,8 @@
 
             $pager = $categoryModel->pager;
 
+            $admin_theme = env('app.theme.system');
+
             $data = [
                 'title' => 'Categorias',
                 'categories' => $categories,
@@ -65,7 +67,7 @@
                 'page' => 'dashboard.categories'
             ];
 
-            return view('system/dashboard/categories/index', $data);
+            return view('system/'. $admin_theme .'/dashboard/categories/index', $data);
         }
 
         /**
@@ -92,6 +94,8 @@
              */
             $parents = $categoryModel->orderBy('name', 'ASC')->findAll();
 
+            $admin_theme = env('app.theme.system');
+
             $data = [
                 'title' => 'Nova Categoria',
                 'parents' => $parents,
@@ -99,7 +103,7 @@
                 'page' => 'dashboard.categories'
             ];
 
-            return view('system/dashboard/categories/create', $data);
+            return view('system/'. $admin_theme .'/dashboard/categories/create', $data);
         }
 
         /**
@@ -138,7 +142,9 @@
                 'description' => $this->request->getPost('description'),
             ]);
 
-            return redirect()->to('/dashboard/categories')->with('success', 'Categoria criada com sucesso!');
+            return redirect()
+                ->to('/dashboard/categories')
+                ->with('success', 'Categoria criada com sucesso!');
         }
 
         /**
@@ -172,6 +178,8 @@
                 throw new \CodeIgniter\Exceptions\PageNotFoundException('Categoria não encontrada');
             }
 
+            $admin_theme = env('app.theme.system');
+
             $data = [
                 'title' => 'Editar Categoria',
                 'category' => $category,
@@ -180,7 +188,7 @@
                 'page' => 'dashboard.categories'
             ];
 
-            return view('system/dashboard/categories/edit', $data);
+            return view('system/'. $admin_theme .'/dashboard/categories/edit', $data);
         }
 
         /**
@@ -207,7 +215,9 @@
                 'description' => $this->request->getPost('description'),
             ]);
 
-            return redirect()->to('/dashboard/categories')->with('success', 'Categoria atualizada com sucesso!');
+            return redirect()
+                ->to('/dashboard/categories')
+                ->with('success', 'Categoria atualizada com sucesso!');
         }
 
         /**
@@ -229,6 +239,8 @@
 
             $this->categoryModel->delete($id);
 
-            return redirect()->to('/dashboard/categories')->with('success', 'Categoria removida com sucesso!');
+            return redirect()
+                ->to('/dashboard/categories')
+                ->with('success', 'Categoria removida com sucesso!');
         }
     }
