@@ -1,4 +1,8 @@
 <?php
 
-// override core en language system validation or define your own en language validation message
+/**
+ * Substitua a validação do sistema de idioma inglês
+ * principal ou defina sua própria mensagem de validação
+ * de idioma inglês.
+ */
 return [];
