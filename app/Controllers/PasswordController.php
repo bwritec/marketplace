@@ -1,152 +1,156 @@
 <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\UserModel;
-use App\Models\PasswordResetModel;
-use CodeIgniter\Controller;
+    use App\Models\UserModel;
+    use App\Models\PasswordResetModel;
+    use CodeIgniter\Controller;
 
-class PasswordController extends BaseController
-{
-    public function forgot()
+
+    /**
+     *
+     */
+    class PasswordController extends BaseController
     {
-        $admin_theme = env('app.theme.system');
-
-        return view('system/'. $admin_theme .'/auth/forgot', [
-            'title' => 'Recuperar senha'
-        ]);
-    }
-
-    public function sendResetLink()
-    {
-        helper(['form']);
-        $email = $this->request->getPost('email');
-
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'email' => 'required|valid_email',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run())
+        public function forgot()
         {
             $admin_theme = env('app.theme.system');
 
             return view('system/'. $admin_theme .'/auth/forgot', [
-                'title' => 'Recuperar senha',
-                'errors' => $validation->getErrors(),
+                'title' => 'Recuperar senha'
             ]);
         }
 
-        $userModel = new UserModel();
-        $resetModel = new PasswordResetModel();
-
-        $user = $userModel->where('email', $email)->first();
-
-        if (!$user)
+        public function sendResetLink()
         {
+            helper(['form']);
+            $email = $this->request->getPost('email');
+
+            $validation = \Config\Services::validation();
+            $validation->setRules([
+                'email' => 'required|valid_email',
+            ]);
+
+            if (!$validation->withRequest($this->request)->run())
+            {
+                $admin_theme = env('app.theme.system');
+
+                return view('system/'. $admin_theme .'/auth/forgot', [
+                    'title' => 'Recuperar senha',
+                    'errors' => $validation->getErrors(),
+                ]);
+            }
+
+            $userModel = new UserModel();
+            $resetModel = new PasswordResetModel();
+
+            $user = $userModel->where('email', $email)->first();
+
+            if (!$user)
+            {
+                $admin_theme = env('app.theme.system');
+
+                return view('system/'. $admin_theme .'/auth/forgot', [
+                    'title' => 'Recuperar senha',
+                    'error' => 'E-mail não encontrado.'
+                ]);
+            }
+
+            $token = $resetModel->createToken($email);
+            $resetLink = site_url('reset/' . $token);
+
+            /**
+             * Envia o e-mail
+             */
+            $emailService = \Config\Services::email();
+            $emailService->setTo($email);
+            $emailService->setSubject('Redefinição de senha');
+            $emailService->setMailType('html');
+            $emailService->setMessage("
+                Olá {$user['name']},<br><br>
+                Clique no link abaixo para redefinir sua senha:<br>
+                <a href='{$resetLink}'>{$resetLink}</a><br><br>
+                Se você não solicitou, ignore este e-mail.
+            ");
+            $emailService->send();
+
             $admin_theme = env('app.theme.system');
 
             return view('system/'. $admin_theme .'/auth/forgot', [
                 'title' => 'Recuperar senha',
-                'error' => 'E-mail não encontrado.'
+                'success' => 'Enviamos um link para seu e-mail.'
             ]);
         }
 
-        $token = $resetModel->createToken($email);
-        $resetLink = site_url('reset/' . $token);
-
-        /**
-         * Envia o e-mail
-         */
-        $emailService = \Config\Services::email();
-        $emailService->setTo($email);
-        $emailService->setSubject('Redefinição de senha');
-        $emailService->setMailType('html');
-        $emailService->setMessage("
-            Olá {$user['name']},<br><br>
-            Clique no link abaixo para redefinir sua senha:<br>
-            <a href='{$resetLink}'>{$resetLink}</a><br><br>
-            Se você não solicitou, ignore este e-mail.
-        ");
-        $emailService->send();
-
-        $admin_theme = env('app.theme.system');
-
-        return view('system/'. $admin_theme .'/auth/forgot', [
-            'title' => 'Recuperar senha',
-            'success' => 'Enviamos um link para seu e-mail.'
-        ]);
-    }
-
-    public function reset($token)
-    {
-        $resetModel = new PasswordResetModel();
-        $reset = $resetModel->getByToken($token);
-
-        if (!$reset)
+        public function reset($token)
         {
-            return redirect()->to('/forgot')->with('error', 'Token inválido ou expirado.');
-        }
+            $resetModel = new PasswordResetModel();
+            $reset = $resetModel->getByToken($token);
 
-        $admin_theme = env('app.theme.system');
+            if (!$reset)
+            {
+                return redirect()->to('/forgot')->with('error', 'Token inválido ou expirado.');
+            }
 
-        return view('system/'. $admin_theme .'/auth/reset', [
-            'title' => 'Redefinir senha',
-            'token' => $token
-        ]);
-    }
-
-    public function updatePassword()
-    {
-        helper(['form']);
-        $token = $this->request->getPost('token');
-        $password = $this->request->getPost('password');
-
-        $resetModel = new PasswordResetModel();
-        $userModel  = new UserModel();
-
-        $reset = $resetModel->getByToken($token);
-
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'password' => 'required|min_length[6]',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run())
-        {
             $admin_theme = env('app.theme.system');
 
             return view('system/'. $admin_theme .'/auth/reset', [
                 'title' => 'Redefinir senha',
-                'token' => $token,
-                'errors' => $validation->getErrors(),
+                'token' => $token
             ]);
         }
 
-        if (!$reset)
+        public function updatePassword()
         {
-            return redirect()->to('/forgot')->with('error', 'Token inválido.');
-        }
+            helper(['form']);
+            $token = $this->request->getPost('token');
+            $password = $this->request->getPost('password');
 
-        if (strlen($password) < 6)
-        {
-            $admin_theme = env('app.theme.system');
+            $resetModel = new PasswordResetModel();
+            $userModel  = new UserModel();
 
-            return view('system/'. $admin_theme .'/auth/reset', [
-                'title' => 'Redefinir senha',
-                'token' => $token,
-                'error' => 'A senha deve ter pelo menos 6 caracteres.'
+            $reset = $resetModel->getByToken($token);
+
+            $validation = \Config\Services::validation();
+            $validation->setRules([
+                'password' => 'required|min_length[6]',
             ]);
+
+            if (!$validation->withRequest($this->request)->run())
+            {
+                $admin_theme = env('app.theme.system');
+
+                return view('system/'. $admin_theme .'/auth/reset', [
+                    'title' => 'Redefinir senha',
+                    'token' => $token,
+                    'errors' => $validation->getErrors(),
+                ]);
+            }
+
+            if (!$reset)
+            {
+                return redirect()->to('/forgot')->with('error', 'Token inválido.');
+            }
+
+            if (strlen($password) < 6)
+            {
+                $admin_theme = env('app.theme.system');
+
+                return view('system/'. $admin_theme .'/auth/reset', [
+                    'title' => 'Redefinir senha',
+                    'token' => $token,
+                    'error' => 'A senha deve ter pelo menos 6 caracteres.'
+                ]);
+            }
+
+            $userModel->where('email', $reset['email'])
+                      ->set('password', password_hash($password, PASSWORD_DEFAULT))
+                      ->update();
+
+            $resetModel->deleteToken($token);
+
+            return redirect()
+                ->to('/login')
+                ->with('success', 'Senha alterada com sucesso!');
         }
-
-        $userModel->where('email', $reset['email'])
-                  ->set('password', password_hash($password, PASSWORD_DEFAULT))
-                  ->update();
-
-        $resetModel->deleteToken($token);
-
-        return redirect()
-            ->to('/login')
-            ->with('success', 'Senha alterada com sucesso!');
     }
-}

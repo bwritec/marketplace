@@ -1,47 +1,51 @@
 <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\ProductModel;
-use App\Models\ProductThumbnailModel;
+    use App\Models\ProductModel;
+    use App\Models\ProductThumbnailModel;
 
-class HomeController extends BaseController
-{
+
     /**
      *
      */
-    public function index(): string
+    class HomeController extends BaseController
     {
-        $productModel = new ProductModel();
-        $thumbModel   = new ProductThumbnailModel();
+        /**
+         *
+         */
+        public function index(): string
+        {
+            $productModel = new ProductModel();
+            $thumbModel   = new ProductThumbnailModel();
+
+            /**
+             * Busca os 12 produtos mais recentes com miniatura
+             */
+            $last_products = $productModel
+                ->select('products.*, product_thumbnails.name AS thumbnail')
+                ->join('product_thumbnails', 'product_thumbnails.product_id = products.id', 'left')
+                ->orderBy('products.id', 'DESC')
+                ->limit(12)
+                ->findAll();
+
+            $data = [
+                'title' => 'Página inicial',
+                'last_products' => $last_products,
+            ];
+
+            return view("themes/". env('app.theme') ."/index", $data);
+        }
 
         /**
-         * Busca os 12 produtos mais recentes com miniatura
+         *
          */
-        $last_products = $productModel
-            ->select('products.*, product_thumbnails.name AS thumbnail')
-            ->join('product_thumbnails', 'product_thumbnails.product_id = products.id', 'left')
-            ->orderBy('products.id', 'DESC')
-            ->limit(12)
-            ->findAll();
+        public function blank(): string
+        {
+            $data = [
+                'title' => 'Branco',
+            ];
 
-        $data = [
-            'title' => 'Página inicial',
-            'last_products' => $last_products,
-        ];
-
-        return view("themes/". env('app.theme') ."/index", $data);
+            return view("themes/". env('app.theme') ."/blank", $data);
+        }
     }
-
-    /**
-     *
-     */
-    public function blank(): string
-    {
-        $data = [
-            'title' => 'Branco',
-        ];
-
-        return view("themes/". env('app.theme') ."/blank", $data);
-    }
-}

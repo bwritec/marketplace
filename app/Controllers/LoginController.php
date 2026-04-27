@@ -1,102 +1,106 @@
 <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use App\Models\UserModel;
-use CodeIgniter\Controller;
+    use App\Models\UserModel;
+    use CodeIgniter\Controller;
 
-class LoginController extends BaseController
-{
-    /**
-     *
-     */
-    public function index()
-    {
-        /**
-         * Se já estiver logado, redireciona
-         */
-        if (session()->get('user'))
-        {
-            return redirect()->to('/dashboard');
-        }
-
-        $admin_theme = env('app.theme.system');
-
-        return view('system/'. $admin_theme .'/login', [
-            'title' => 'Login'
-        ]);
-    }
 
     /**
      *
      */
-    public function auth()
+    class LoginController extends BaseController
     {
         /**
-         * Se já estiver logado, redireciona
+         *
          */
-        if (session()->get('user'))
+        public function index()
         {
-            return redirect()->to('/dashboard');
-        }
+            /**
+             * Se já estiver logado, redireciona
+             */
+            if (session()->get('user'))
+            {
+                return redirect()->to('/dashboard');
+            }
 
-        helper(['form']);
-        $session    = session();
-        $validation = \Config\Services::validation();
-        $userModel  = new UserModel();
-
-        $validation->setRules([
-            'cpf'      => 'required|is_cpf',
-            'password' => 'required|min_length[6]',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run())
-        {
             $admin_theme = env('app.theme.system');
 
             return view('system/'. $admin_theme .'/login', [
-                'title'  => 'Login',
-                'errors' => $validation->getErrors()
-            ]);
-        }
-
-        $cpf  = $this->request->getPost('cpf');
-        $pass = $this->request->getPost('password');
-        $user = $userModel->getByCpf($cpf);
-
-        if (!$user || !password_verify($pass, $user['password']))
-        {
-            $admin_theme = env('app.theme.system');
-
-            return view('system/'. $admin_theme .'/login', [
-                'title'  => 'Login',
-                'errors' => [
-                    'cpf' => 'CPF ou senha inválidos.'
-                ]
+                'title' => 'Login'
             ]);
         }
 
         /**
-         * cria sessão.
+         *
          */
-        $session->set('user', [
-            'id'   => $user['id'],
-            'name' => $user['name'],
-            'cpf'  => $user['cpf'],
-            'email' => $user['email'],
-            'admin' => $user['admin'] // 1 ou 0
-        ]);
+        public function auth()
+        {
+            /**
+             * Se já estiver logado, redireciona
+             */
+            if (session()->get('user'))
+            {
+                return redirect()->to('/dashboard');
+            }
 
-        return redirect()->to('/dashboard');
+            helper(['form']);
+            $session    = session();
+            $validation = \Config\Services::validation();
+            $userModel  = new UserModel();
+
+            $validation->setRules([
+                'cpf'      => 'required|is_cpf',
+                'password' => 'required|min_length[6]',
+            ]);
+
+            if (!$validation->withRequest($this->request)->run())
+            {
+                $admin_theme = env('app.theme.system');
+
+                return view('system/'. $admin_theme .'/login', [
+                    'title'  => 'Login',
+                    'errors' => $validation->getErrors()
+                ]);
+            }
+
+            $cpf  = $this->request->getPost('cpf');
+            $pass = $this->request->getPost('password');
+            $user = $userModel->getByCpf($cpf);
+
+            if (!$user || !password_verify($pass, $user['password']))
+            {
+                $admin_theme = env('app.theme.system');
+
+                return view('system/'. $admin_theme .'/login', [
+                    'title'  => 'Login',
+                    'errors' => [
+                        'cpf' => 'CPF ou senha inválidos.'
+                    ]
+                ]);
+            }
+
+            /**
+             * cria sessão.
+             */
+            $session->set('user', [
+                'id'   => $user['id'],
+                'name' => $user['name'],
+                'cpf'  => $user['cpf'],
+                'email' => $user['email'],
+                'admin' => $user['admin'] // 1 ou 0
+            ]);
+
+            return redirect()->to('/dashboard');
+        }
+
+        /**
+         *
+         */
+        public function logout()
+        {
+            session()->destroy();
+
+            return redirect()->to('/login');
+        }
     }
-
-    /**
-     *
-     */
-    public function logout()
-    {
-        session()->destroy();
-
-        return redirect()->to('/login');
-    }
-}

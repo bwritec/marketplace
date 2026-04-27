@@ -1,27 +1,31 @@
 <?php
 
-namespace App\Controllers;
+    namespace App\Controllers;
 
-use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-class DashboardController extends BaseController
-{
-    public function index()
+
+    /**
+     *
+     */
+    class DashboardController extends BaseController
     {
-        $user = session()->get('user');
-
-        if (!$user)
+        public function index()
         {
-            return redirect()->to('/login');
+            $user = session()->get('user');
+
+            if (!$user)
+            {
+                return redirect()->to('/login');
+            }
+
+            $admin_theme = env('app.theme.system');
+
+            return view('system/'. $admin_theme .'/dashboard/index', [
+                'title' => 'Dashboard',
+                'page' => 'dashboard.index',
+                'admin_theme' => $admin_theme,
+                'user'  => $user
+            ]);
         }
-
-        $admin_theme = env('app.theme.system');
-
-        return view('system/'. $admin_theme .'/dashboard/index', [
-            'title' => 'Dashboard',
-            'page' => 'dashboard.index',
-            'admin_theme' => $admin_theme,
-            'user'  => $user
-        ]);
     }
-}
