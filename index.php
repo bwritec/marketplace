@@ -1,21 +1,38 @@
 <?php
 
     /**
-     * Vamos carregar o codeigniter caso o mysqli esteja
-     * hábilitado.
+     * Questão: O .htaccess existe nesse diretorio ?
      */
-    if (extension_loaded('mysqli'))
+    if (!file_exists(__DIR__ . "/.htaccess"))
     {
-        include __DIR__ . "/codeigniter/public/index.php";
-        die();
-    }
+        /**
+         * Vamos carregar o codeigniter caso o mysqli esteja
+         * hábilitado.
+         */
+        if (extension_loaded('mysqli'))
+        {
+            $htaccess  = "RewriteEngine On\n\n";
+            $htaccess .= "# Redireciona tudo para /codeigniter\n";
+            $htaccess .= "RewriteRule ^(.*)$ codeigniter/$1 [L]\n";
+        } else if (extension_loaded('pdo_mysql'))
+        {
+            /**
+             * Vamos carregar o symfony caso o pdo mysql esteja
+             * hábilitado.
+             */
+            $htaccess  = "RewriteEngine On\n\n";
+            $htaccess .= "# Redireciona tudo para /symfony\n";
+            $htaccess .= "RewriteRule ^(.*)$ symfony/$1 [L]\n";
+        }
 
-    /**
-     * Vamos carregar o symfony caso o pdo mysql esteja
-     * hábilitado.
-     */
-    if (extension_loaded('pdo_mysql'))
-    {
-        include __DIR__ . "/symfony/public/index.php";
-        die();
+        /**
+         * Vamos gravar um .htaccess para essa instalação.
+         */
+        file_put_contents(__DIR__ . "/.htaccess", $htaccess);
+
+        /**
+         * Vamos fazer refresh
+         */
+        header("Location: index.php");
+        exit;
     }
