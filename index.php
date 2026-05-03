@@ -14,15 +14,18 @@
             $htaccess  = "RewriteEngine On\n\n";
             $htaccess .= "# Redireciona tudo para /codeigniter\n";
             $htaccess .= "RewriteRule ^(.*)$ codeigniter/$1 [L]\n";
-        } else if (extension_loaded('pdo_mysql'))
+        } else
         {
-            /**
-             * Vamos carregar o symfony caso o pdo mysql esteja
-             * hábilitado.
-             */
-            $htaccess  = "RewriteEngine On\n\n";
-            $htaccess .= "# Redireciona tudo para /symfony\n";
-            $htaccess .= "RewriteRule ^(.*)$ symfony/$1 [L]\n";
+            if (extension_loaded('pdo_mysql'))
+            {
+                /**
+                 * Vamos carregar o symfony caso o pdo mysql esteja
+                 * hábilitado.
+                 */
+                $htaccess  = "RewriteEngine On\n\n";
+                $htaccess .= "# Redireciona tudo para /symfony\n";
+                $htaccess .= "RewriteRule ^(.*)$ symfony/$1 [L]\n";
+            }
         }
 
         /**
