@@ -13,6 +13,8 @@
         {
             $htaccess  = "RewriteEngine On\n\n";
             $htaccess .= "# Redireciona tudo para /codeigniter\n";
+            $htaccess .= "RewriteCond %{REQUEST_FILENAME} !-f\n";
+            $htaccess .= "RewriteCond %{REQUEST_FILENAME} !-d\n";
             $htaccess .= "RewriteRule ^(.*)$ codeigniter/$1 [L]\n";
         } else
         {
@@ -24,6 +26,8 @@
                  */
                 $htaccess  = "RewriteEngine On\n\n";
                 $htaccess .= "# Redireciona tudo para /symfony\n";
+                $htaccess .= "RewriteCond %{REQUEST_FILENAME} !-f\n";
+                $htaccess .= "RewriteCond %{REQUEST_FILENAME} !-d\n";
                 $htaccess .= "RewriteRule ^(.*)$ symfony/$1 [L]\n";
             }
         }
